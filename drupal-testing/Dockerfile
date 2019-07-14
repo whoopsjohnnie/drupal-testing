@@ -21,7 +21,7 @@ RUN apt-get update; \
   mariadb-client apache2 pwgen vim-tiny mc iproute2 python-setuptools \
   unison netcat net-tools memcached nano libapache2-mod-php php php-cli php-common \
   php-gd php-json php-mbstring php-xdebug php-mysql php-opcache php-curl \
-  php-readline php-xml php-memcached php-oauth php-bcmath; \
+  php-readline php-xml php-memcached php-oauth php-bcmath phpunit; \
   apt-get clean; \
   apt-get autoclean; \
   apt-get -y autoremove; \
@@ -56,7 +56,7 @@ ADD https://updates.drupal.org/release-history/drupal/8.x /tmp/latest.xml
 
 # Retrieve drupal & adminer
 RUN /bin/bash -t \
-    && cd /var/www/html; drush -v dl drupal --default-major=8  --drupal-project-rename="web" \
+    && cd /var/www/html; drush -v dl drupal --dev --default-major=8 --drupal-project-rename="web" \
     && cd /var/www/html; chmod a+w web/sites/default; \
     mkdir web/sites/default/files; chown -R www-data:www-data /var/www/html/; \
     chmod -R ug+w /var/www/html/ ; \
@@ -68,6 +68,14 @@ RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 ADD ./default.services.yml /var/www/html/web/sites/default/default.services.yml
 ADD ./default.settings.php /var/www/html/web/sites/default/default.settings.php
 ADD ./settings.php /var/www/html/web/sites/default/settings.php
+
+# 
+ADD ./phpunit.xml /var/www/html/web/core/phpunit.xml
+
+# 
+ADD ./tests/TestSuiteBase.php /var/www/html/web/core/tests/TestSuites/TestSuiteBase.php
+ADD ./tests/FullUnitTestSuite.php /var/www/html/web/core/tests/TestSuites/FullUnitTestSuite.php
+ADD ./tests/MinimalUnitTestSuite.php /var/www/html/web/core/tests/TestSuites/MinimalUnitTestSuite.php
 
 WORKDIR /var/www/html
 
