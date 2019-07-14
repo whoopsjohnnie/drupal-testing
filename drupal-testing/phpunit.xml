@@ -30,8 +30,9 @@
   </php>
   <testsuites>
     <testsuite name="minimal">
-      <file>/var/www/html/web/core/modules/simpletest/tests/src/Unit/PhpUnitErrorTest.php</file>
       <directory>/var/www/html/web/core/modules/simpletest/tests/src/Unit</directory>
+      <directory>/var/www/html/web/core/modules/user/tests/src/Unit</directory>
+      <directory>/var/www/html/web/core/modules/datetime/tests/src/Unit</directory>
     </testsuite>
   </testsuites>
   <listeners>
