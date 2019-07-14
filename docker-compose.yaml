@@ -1,0 +1,26 @@
+
+version: '3.1'
+services:
+
+  drupal:
+    build:
+      context: ./drupal
+      dockerfile: Dockerfile
+    container_name: drupal
+    ports:
+      - 8080:80
+    restart: always
+
+  mysql:
+    # image: mysql:5.7
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    container_name: drupal-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: drupal
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+    ports:
+      - "3306:3306"
