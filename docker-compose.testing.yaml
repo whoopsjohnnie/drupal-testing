@@ -12,10 +12,9 @@ services:
     container_name: drupal-testing
     ports:
       - 8080:80
-    # volumes:
-    #   - ./local/data:/var/lib/mysql
-    #   - ./local:/var/www/html
-    restart: always
+    volumes:
+      - ./testresults:/testresults
+    # restart: always
 
   mysql:
     # image: mysql:5.7

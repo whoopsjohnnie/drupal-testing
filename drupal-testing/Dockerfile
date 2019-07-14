@@ -43,6 +43,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install supervisor
 COPY ./files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./files/start.sh /start.sh
+COPY ./files/testing.sh /testing.sh
 COPY ./files/foreground.sh /etc/apache2/foreground.sh
 
 # Apache & Xdebug
@@ -72,12 +73,9 @@ ADD ./settings.php /var/www/html/web/sites/default/settings.php
 # 
 ADD ./phpunit.xml /var/www/html/web/core/phpunit.xml
 
-# 
-ADD ./tests/TestSuiteBase.php /var/www/html/web/core/tests/TestSuites/TestSuiteBase.php
-ADD ./tests/FullUnitTestSuite.php /var/www/html/web/core/tests/TestSuites/FullUnitTestSuite.php
-ADD ./tests/MinimalUnitTestSuite.php /var/www/html/web/core/tests/TestSuites/MinimalUnitTestSuite.php
-
 WORKDIR /var/www/html
 
-EXPOSE 22 80 3306 9000
-CMD ["/bin/bash", "/start.sh"]
+# EXPOSE 22 80 3306 9000
+# CMD ["/bin/bash", "/start.sh"]
+
+CMD ["/bin/bash", "/testing.sh"]
