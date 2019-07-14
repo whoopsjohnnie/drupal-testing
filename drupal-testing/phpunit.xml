@@ -10,6 +10,7 @@
          beStrictAboutOutputDuringTests="true"
          beStrictAboutChangesToGlobalState="true"
          printerClass="\Drupal\Tests\Listeners\HtmlOutputPrinter">
+
   <php>
     <!-- Set error reporting to E_ALL. -->
     <ini name="error_reporting" value="32767"/>
@@ -20,7 +21,7 @@
     <!-- Example SIMPLETEST_DB value: mysql://username:password@localhost/databasename#table_prefix -->
     <env name="SIMPLETEST_DB" value="mysql://drupal:drupal@drupal-mysql:3306/drupal"/>
     <!-- Example BROWSERTEST_OUTPUT_DIRECTORY value: /path/to/webroot/sites/simpletest/browser_output -->
-    <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="/testresults"/>
+    <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="/browsertest"/>
     <!-- To disable deprecation testing completely uncomment the next line. -->
     <!-- <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/> -->
     <!-- Example for changing the driver class for mink tests MINK_DRIVER_CLASS value: 'Drupal\FunctionalJavascriptTests\DrupalSelenium2Driver' -->
@@ -28,6 +29,7 @@
     <!-- Example for changing the driver args to phantomjs tests MINK_DRIVER_ARGS_PHANTOMJS value: '["http://127.0.0.1:8510"]' -->
     <!-- Example for changing the driver args to webdriver tests MINK_DRIVER_ARGS_WEBDRIVER value: '["firefox", null, "http://localhost:4444/wd/hub"]' -->
   </php>
+
   <testsuites>
     <testsuite name="minimal">
       <directory>/var/www/html/web/core/modules/simpletest/tests/src/Unit</directory>
@@ -35,6 +37,7 @@
       <directory>/var/www/html/web/core/modules/datetime/tests/src/Unit</directory>
     </testsuite>
   </testsuites>
+
   <listeners>
     <listener class="\Drupal\Tests\Listeners\DrupalListener">
     </listener>
@@ -42,6 +45,7 @@
     <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
     </listener>
   </listeners>
+
   <!-- Filter for coverage reports. -->
   <filter>
     <whitelist>
@@ -63,4 +67,16 @@
       <directory>../sites</directory>
      </whitelist>
   </filter>
+
+  <logging>
+    <log type="coverage-html" target="/testresults/report" lowUpperBound="35"
+         highLowerBound="70"/>
+    <log type="coverage-clover" target="/testresults/coverage.xml"/>
+    <log type="coverage-php" target="/testresults/coverage.serialized"/>
+    <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
+    <log type="junit" target="/testresults/logfile.xml"/>
+    <log type="testdox-html" target="/testresults/testdox.html"/>
+    <log type="testdox-text" target="/testresults/testdox.txt"/>
+  </logging>
+
 </phpunit>

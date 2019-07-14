@@ -13,6 +13,7 @@ services:
     ports:
       - 8080:80
     volumes:
+      - ./browsertest:/browsertest
       - ./testresults:/testresults
     # restart: always
 
